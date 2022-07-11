@@ -4,13 +4,13 @@ const SET_INITIAL_SEQ = 'main/SET_INITIAL_SEQ'
 const SET_SEQ_ARRAY = 'main/SET_SEQ_ARRAY'
 const INCREASE_SEQ = 'main/INCREASE_SEQ'
 const SET_SCORE = 'main/SET_SCORE'
-const GET_RESULT = 'main/GET_RESULT'
+const SET_INITIAL_SCORE = 'main/SET_INITIAL_SCORE'
 
 export const setInitialSeq = () => ({ type: SET_INITIAL_SEQ })
 export const setSeqArray = () => ({ type: SET_SEQ_ARRAY })
 export const increaseSeq = () => ({ type: INCREASE_SEQ })
 export const setScore = (score: number) => ({ type: SET_SCORE, score })
-export const getResult = (score: number) => ({ type: GET_RESULT, score })
+export const setInitialScore = () => ({ type: SET_INITIAL_SCORE })
 
 const initialState = {
     seq: 0, seqArray: [0, 1, 2],
@@ -39,16 +39,11 @@ const reducer = (state = initialState, action: any) => {
         case SET_SCORE:
             return { ...state, score: state.score + action.score }
 
-        case GET_RESULT:
-            const resultData = getResultAPI(action.key)
-            return { ...state, result: resultData }
+        case SET_INITIAL_SCORE:
+            return { ...state, score: 0 }
 
         default: return state
     }
-}
-
-const getResultAPI = async (key: string) => {
-    return await axios.get(`https://ebti.realclass.co.kr/api/result/${key}`)
 }
 
 export default reducer;

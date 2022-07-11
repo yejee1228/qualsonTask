@@ -7,8 +7,8 @@ const GlobalStyle = createGlobalStyle`
     div#__next,
     div#__next > div {
         color: ${({ theme }) => theme.colors.primary};
-        width:100%;
-        height:100%;
+        width: 100%;
+        height: 100%;
         margin: 0;
         padding: 0;
         white-space: pre-wrap;

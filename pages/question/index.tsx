@@ -53,9 +53,10 @@ const QuestionWindow = () => {
     const nextPage = (option: number) => {
         setCorrect(option)
         dispatch(setScore(option === 1 ? question.optionPoint1 : question.optionPoint2))
-        dispatch(increaseSeq())
-        if (seq > 2) {
+        if (seq === 2) {
             router.push('/result')
+        } else {
+            dispatch(increaseSeq())
         }
     }
 

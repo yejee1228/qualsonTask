@@ -3,13 +3,14 @@ import { useRouter } from "next/router";
 import { useDispatch } from 'react-redux';
 import { MainWrap } from '../../components/main'
 import { Wrap, SearchBox, SearchText, TitleImage, Poster, Button, ButtonText } from '../../components/title';
-import { setInitialSeq, setSeqArray } from '../../store/modules/main';
+import { setInitialSeq, setInitialScore, setSeqArray } from '../../store/modules/main';
 
-const Main = () => {
+const index = () => {
     const router = useRouter()
     const dispatch = useDispatch()
     const goQuestionPage = () => {
         dispatch(setInitialSeq())
+        dispatch(setInitialScore())
         dispatch(setSeqArray())
         router.push('/question')
     }
@@ -36,4 +37,4 @@ const Main = () => {
         </>
     )
 }
-export default Main
+export default index

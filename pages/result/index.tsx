@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { MainWrap } from '../../components/main'
@@ -15,37 +16,77 @@ import {
     ResultImage,
     TypeTalk,
     EnglishBox,
+    ResultDescription,
     Relationship,
+    TitleSpan,
+    ChmiImg,
+    ChmiName,
     ShareBox,
+    ReturnButton,
 } from '../../components/window';
-import { getResult } from '../../store/modules/main';
 
 const Result = () => {
-    const resultObject = {}
+    const resultObject = {
+        title: '',
+        key: '',
+        media: '',
+        name: '',
+        description: [],
+        expression: { en: '', ko: '' },
+        chemi: { best: '', worst: '' },
+    }
+    const [result, setResult] = useState(resultObject)
+    const [bestResult, setBestResult] = useState(resultObject)
+    const [worstResult, setWorstResult] = useState(resultObject)
+
+    const router = useRouter();
+
     const totalScore = useSelector((state: any) => state.main.score)
     const resultTypes = useSelector((state: any) => state.main.resultTypes)
-    const key = resultTypes.filter((type: any) => type.value === totalScore).key
 
-    const [result, setResult] = useState({})
+    const resultKey: any = resultTypes.find((type: any) => type.value === totalScore).key
+
     useEffect(() => {
-        axios.get(`https://ebti.realclass.co.kr/api/result/${key}`)
+        axios.get(`https://ebti.realclass.co.kr/api/result/${resultKey}`)
             .then(res => {
-                const result: typeof resultObject = res.data
-                setResult(result)
+                setResult(res.data)
             })
             .catch(err => console.log('error', err))
-    }, [])
+        axios.get(`https://ebti.realclass.co.kr/api/result/${result.chemi.best}`)
+            .then(res => {
+                setBestResult(res.data)
+            })
+            .catch(err => console.log('error', err))
+        axios.get(`https://ebti.realclass.co.kr/api/result/${result.chemi.worst}`)
+            .then(res => {
+                setWorstResult(res.data)
+            })
+            .catch(err => console.log('error', err))
+
+    }, [result])
     const copyLink = () => {
-        //현재 주소 클립보드 복사하기
+        var dummy = document.createElement("input");
+        var text = location.href;
+
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.queryCommandSupported("copy")
+        document.body.removeChild(dummy);
     }
+
+    const goReturn = () => {
+        router.push('/')
+    }
+
     return (
         <MainWrap>
             <ResultWrap>
-                <ResultTypeText>개X마이웨이</ResultTypeText>
+                <ResultTypeText>{result.title}</ResultTypeText>
                 <ResultCharacter>
-                    <ResultCharacterText color={'#FFFFFF'}>{'<19곰 테드>'}</ResultCharacterText>
+                    <ResultCharacterText color={'#FFFFFF'}>{'<' + result.media + '>'}</ResultCharacterText>
                     &nbsp;
-                    <ResultCharacterText color={'#FFF086'}>테드</ResultCharacterText>
+                    <ResultCharacterText color={'#FFF086'}>{result.name}</ResultCharacterText>
                 </ResultCharacter>
                 <ResultWindowWrap whole={true}>
                     <TitleBar>
@@ -53,12 +94,13 @@ const Result = () => {
                         <TitleBarButton color="#5963FF" left="23px" />
                     </TitleBar>
                     <ResultContentWrap>
-                        <ResultImage src='/images/ted.png' />
-                        <TypeTalk>테드 유형들의 영어 한마디</TypeTalk>
-                        <EnglishBox>
-                            {`You got a lot of problem, don't you?`}
-                            <br /><br />
-                            {`당신 뭔가 정상이 아니죠?`}
+                        <ResultImage src={'/images/' + result.key + '.png'} />
+                        <TypeTalk>{result.name} 유형들의 영어 한마디</TypeTalk>
+                        <EnglishBox color='#000D50'>
+                            {result.expression.en}
+                        </EnglishBox>
+                        <EnglishBox color='#000000'>
+                            {result.expression.ko}
                         </EnglishBox>
                     </ResultContentWrap>
                 </ResultWindowWrap>
@@ -68,10 +110,18 @@ const Result = () => {
                         <TitleBarButton color="#5963FF" left="23px" />
                     </TitleBar>
                     <ResultContentWrap>
-                        <b>말보다</b>
-                        <br />
-                        항상 자신만만
-                        ...
+                        <ResultDescription>
+                            <b>{result.description[0]}</b>
+                            <br />
+                            <br />
+                            {result.description[1]}
+                            <br />
+                            <br />
+                            {result.description[2]}
+                            <br />
+                            <br />
+                            {result.description[3]}
+                        </ResultDescription>
                     </ResultContentWrap>
                 </ResultWindowWrap>
                 <Relationship>
@@ -81,10 +131,9 @@ const Result = () => {
                             <TitleBarButton color="#5963FF" left="23px" />
                         </TitleBar>
                         <ResultContentWrap>
-                            <b>말보다</b>
-                            <br />
-                            항상 자신만만
-                            ...
+                            <TitleSpan>만나면<br />좋은 캐릭터</TitleSpan>
+                            <ChmiImg url={'/images/' + bestResult.key + '.png'}></ChmiImg>
+                            <ChmiName>{'<' + bestResult.media + '>'}&nbsp;{bestResult.name}</ChmiName>
                         </ResultContentWrap>
                     </ResultWindowWrap>
                     <ResultWindowWrap whole={false}>
@@ -93,10 +142,9 @@ const Result = () => {
                             <TitleBarButton color="#5963FF" left="23px" />
                         </TitleBar>
                         <ResultContentWrap>
-                            <b>말보다</b>
-                            <br />
-                            항상 자신만만
-                            ...
+                            <TitleSpan>거리두기가<br />필요해요</TitleSpan>
+                            <ChmiImg url={'/images/' + worstResult.key + '.png'}></ChmiImg>
+                            <ChmiName>{'<' + worstResult.media + '>'}&nbsp;{worstResult.name}</ChmiName>
                         </ResultContentWrap>
                     </ResultWindowWrap>
                 </Relationship>
@@ -106,7 +154,9 @@ const Result = () => {
                         <TitleBarButton color="#5963FF" left="23px" />
                     </TitleBar>
                     <ResultContentWrap>
-                        결과 공유하고, 친구와 궁합 확인하기
+                        <TitleSpan>
+                            결과 공유하고, 친구와 궁합 확인하기
+                        </TitleSpan>
                         <ShareBox>
                             <Image src='/images/kakao.png' width={46} height={46} style={{ marginRight: '23px' }} alt='카카오톡 공유하기' />
                             <Image src='/images/twitter.png' width={46} height={46} style={{ marginRight: '23px' }} alt='트위터 공유하기' />
@@ -114,6 +164,11 @@ const Result = () => {
                         </ShareBox>
                     </ResultContentWrap>
                 </ResultWindowWrap>
+                <ReturnButton onClick={goReturn}>
+                    <a>
+                        테스트&nbsp;<ResultCharacterText color={'#FFF086'}>다시하기</ResultCharacterText>
+                    </a>
+                </ReturnButton>
             </ResultWrap>
         </MainWrap>
     );

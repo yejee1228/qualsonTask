@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const QuestionWrap = styled.div`
-width: 100%;
-height: 100%;
+    width: 100%;
+    height: fit-content;
 `
 export const QuestionWindowWrap = styled.div`
-width: 90%;
+    width: 90%;
     height: 90%;
     margin: 44px 5%;
     padding-top: 22px;
@@ -139,7 +139,7 @@ export const ResultButton = styled.div<{ correct: boolean }>`
 
 export const ResultWrap = styled.div`
     width: 100%;
-    height: 100%;
+    height: fit-content;
     padding: 15px;
     text-align: -webkit-center;
 `
@@ -157,6 +157,8 @@ export const ResultTypeText = styled.p`
     text-align: center;
     letter-spacing: 1px;
     color: #FFFFFF;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #000000;
     text-shadow: 1px 1px 0px #000000;
     background: linear-gradient(
         to bottom, 
@@ -230,7 +232,7 @@ export const TypeTalk = styled.p`
     letter-spacing: -1px;
 `
 
-export const EnglishBox = styled.p`
+export const EnglishBox = styled.p<{ color: string }>`
     width: auto;
     height: auto;
     margin: 0;
@@ -242,7 +244,18 @@ export const EnglishBox = styled.p`
     line-height: 16px;
     text-align: center;
     letter-spacing: 0.2px;
-    color: #000D50;
+    color: ${({ color }) => color};
+`
+
+export const ResultDescription = styled.div`
+    padding: 13px 14px 30px 14px;
+    font-family: 'Noto Sans CJK KR';
+    font-style: normal;
+    font-size: 13px;
+    line-height: 23px;
+    letter-spacing: -0.7px;
+    text-align:left;
+    color: #000000;
 `
 
 export const Relationship = styled.div`
@@ -251,8 +264,73 @@ export const Relationship = styled.div`
     display: flex;
 `
 
+export const TitleSpan = styled.div`
+    padding-top: 19px;
+    padding-bottom: 9px;
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: -1px;
+    color: #000000;
+`
+
+export const Chmi = styled.div`
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: -1px;
+    color: #000000;
+`
+
+export const ChmiImg = styled.div<{ url: string }>`
+    width: 98px;
+    height: 98px;
+    background: url(${({ url }) => url});
+    background-size: cover;
+    border: 1px solid #000000;
+    border-radius: 50px;
+`
+
+export const ChmiName = styled.div`
+    padding: 15px 35px 29px 35px;
+    font-family: 'Noto Sans CJK KR';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 10px;
+    text-align: center;
+    letter-spacing: -0.7px;
+    color: #000000;
+`
+
 export const ShareBox = styled.div`
     width: 100%;
     margin: 21px auto;
     padding: 17px 74px 0 74px;
+    span {
+        margin-right:23px;
+    }
+`
+
+export const ReturnButton = styled.div`
+    width: 70%;
+    height: 49px;
+    padding: 13px 0;
+    margin: 40px 0;
+    border-radius: 24.5px;
+    font-family: 'NotoSansCJKkr';
+    font-size: 26px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: -0.9px;
+    color: #FFFFFF;
+background: #F56A6A;
+border: 2.2px solid #000000;
+
 `
