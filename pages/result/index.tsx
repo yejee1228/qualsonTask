@@ -93,7 +93,7 @@ const result = () => {
                         <ShareBox>
                             <Image src='/images/kakao.png' width={46} height={46} style={{ marginRight: '23px' }} alt='카카오톡 공유하기' />
                             <Image src='/images/twitter.png' width={46} height={46} style={{ marginRight: '23px' }} alt='트위터 공유하기' />
-                            <Image src='/images/link.png' width={46} height={46} alt='링크 복사하기' onClick={copyLink} />
+                            <Image src='/images/link.png' width={46} height={46} alt='링크 복사하기' onClick={() => copyLink} />
                         </ShareBox>
                     </ResultContentWrap>
                 </ResultWindowWrap>

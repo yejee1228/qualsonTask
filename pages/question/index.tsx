@@ -18,14 +18,12 @@ import {
     QuestionImageWrap,
     QuestionImage,
     ResultBox,
-    ResultCorrectButton,
-    ResultNotCorrectButton,
+    ResultButton
 } from '../../components/window';
 import { increaseSeq, setQuestions, setScore } from '../../store/modules/main';
 
 const QuestionWindow = () => {
     const [question, setQuestion] = useState({})
-    const [optionScore, setOptionScore] = useState(0)
     const [correct, setCorrect] = useState(0)
     const dispatch = useDispatch()
     const router = useRouter()
@@ -34,7 +32,7 @@ const QuestionWindow = () => {
     const seqArray = useSelector((state: any) => state.main.seqArray)
     const questionSeq = seqArray[seq]
 
-    if (seq === 2) {
+    if (seq > 2) {
         router.push('/result')
     }
 
@@ -45,13 +43,14 @@ const QuestionWindow = () => {
                 setQuestion(questions[questionSeq])
             })
             .catch(err => console.log('error', err))
-    }, []);
+        setCorrect(0)
+    }, [correct]);
 
     const nextPage = (option: number) => {
-        //setCorrect(option)
-        //alert('다음으로')
+        setCorrect(option)
+        dispatch(setScore(option === 1 ? question.optionPoint1 : question.optionPoint2))
+        dispatch(increaseSeq())
     }
-
 
     return (
         <MainWrap>
@@ -88,9 +87,6 @@ const QuestionWindow = () => {
                                     <Proceeded seq={2} />
                                 </>
                             }
-                            <Proceeded seq={0} />
-                            <BeforeProgress seq={1} />
-                            <BeforeProgress seq={2} />
                         </ProgressBar>
                         <QuestionBox>
                             <QuestionText color='#00D37A'>
@@ -107,21 +103,8 @@ const QuestionWindow = () => {
                             </QuestionImageWrap>
                         </QuestionBox>
                         <ResultBox>
-                            {correct === 0 &&
-                                <>
-                                    <ResultNotCorrectButton onClick={nextPage(1)}>{question.option1}</ResultNotCorrectButton>
-                                    <ResultNotCorrectButton onClick={nextPage(2)}>{question.option2}</ResultNotCorrectButton>
-                                </>}
-                            {correct === 1 &&
-                                <>
-                                    <ResultCorrectButton onClick={nextPage(1)}>{question.option1}</ResultCorrectButton>
-                                    <ResultNotCorrectButton onClick={nextPage(2)}>{question.option2}</ResultNotCorrectButton>
-                                </>}
-                            {correct === 2 &&
-                                <>
-                                    <ResultNotCorrectButton onClick={nextPage(1)}>{question.option1}</ResultNotCorrectButton>
-                                    <ResultCorrectButton onClick={nextPage(2)}>{question.option2}</ResultCorrectButton>
-                                </>}
+                            <ResultButton correct={correct === 1} onClick={() => nextPage(1)}>{question.option1}</ResultButton>
+                            <ResultButton correct={correct === 2} onClick={() => nextPage(2)}>{question.option2}</ResultButton>
                         </ResultBox>
                     </ContentWrap>
                 </QuestionWindowWrap>

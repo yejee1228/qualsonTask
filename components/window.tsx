@@ -121,7 +121,7 @@ export const QuestionImage = styled.img`
 export const ResultBox = styled.div`
     text-align: -webkit-center;
 `
-export const ResultCorrectButton = styled.button`
+export const ResultButton = styled.div<{ correct: boolean }>`
     width: 100%;
     height: 49px;
     padding: 16px 0;
@@ -132,23 +132,8 @@ export const ResultCorrectButton = styled.button`
     line-height: 16px;
     text-align: center;
     letter-spacing: -0.9px;
-    color: '#FFFFFF';
-    background-color: '#5963FF';
-    border: none;
-`
-export const ResultNotCorrectButton = styled.button`
-    width: 100%;
-    height: 49px;
-    padding: 16px 0;
-    margin: 16px 0;
-    border-radius: 24.5px;
-    font-family: 'NotoSansCJKkr';
-    font-size: 16px;
-    line-height: 16px;
-    text-align: center;
-    letter-spacing: -0.9px;
-    color: '#494949';
-    background-color: '#F1F1F1';
+    color: ${({ correct }) => correct ? `#FFFFFF` : `#494949`};
+    background-color: ${({ correct }) => correct ? `#5963FF` : `#F1F1F1`};
     border: none;
 `
 
