@@ -48,8 +48,7 @@ const QuestionWindow = () => {
     }, []);
 
     const nextPage = (option: number) => {
-        setCorrect(option)
-        //setOptionScore(score)
+        //setCorrect(option)
         //alert('다음으로')
     }
 

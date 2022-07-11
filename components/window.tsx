@@ -121,7 +121,7 @@ export const QuestionImage = styled.img`
 export const ResultBox = styled.div`
     text-align: -webkit-center;
 `
-export const ResultCorrectButton = styled.button<{ onClick: any }>`
+export const ResultCorrectButton = styled.button`
     width: 100%;
     height: 49px;
     padding: 16px 0;
@@ -135,9 +135,8 @@ export const ResultCorrectButton = styled.button<{ onClick: any }>`
     color: '#FFFFFF';
     background-color: '#5963FF';
     border: none;
-    onClick:${({ onClick }) => onClick}
 `
-export const ResultNotCorrectButton = styled.button<{ onClick: any }>`
+export const ResultNotCorrectButton = styled.button`
     width: 100%;
     height: 49px;
     padding: 16px 0;
@@ -151,7 +150,6 @@ export const ResultNotCorrectButton = styled.button<{ onClick: any }>`
     color: '#494949';
     background-color: '#F1F1F1';
     border: none;
-    onClick:${({ onClick }) => onClick}
 `
 
 export const ResultWrap = styled.div`
