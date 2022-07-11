@@ -20,10 +20,18 @@ import {
     ResultBox,
     ResultButton
 } from '../../components/window';
-import { increaseSeq, setQuestions, setScore } from '../../store/modules/main';
+import { increaseSeq, setScore } from '../../store/modules/main';
 
 const QuestionWindow = () => {
-    const [question, setQuestion] = useState({})
+    const questionObject = {
+        text: '',
+        image: '',
+        option1: '',
+        option2: '',
+        optionPoint1: 0,
+        optionPoint2: 0,
+    }
+    const [question, setQuestion] = useState(questionObject)
     const [correct, setCorrect] = useState(0)
     const dispatch = useDispatch()
     const router = useRouter()
@@ -39,7 +47,7 @@ const QuestionWindow = () => {
     useEffect(() => {
         axios.get(`http://localhost:3000/api/question`)
             .then(res => {
-                const questions: object[] = res.data.question
+                const questions: typeof questionObject[] = res.data.question
                 setQuestion(questions[questionSeq])
             })
             .catch(err => console.log('error', err))
