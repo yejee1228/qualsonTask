@@ -1,5 +1,7 @@
+import axios from 'axios';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import { MainWrap } from '../../components/main'
 import {
     ResultWrap,
@@ -16,8 +18,23 @@ import {
     Relationship,
     ShareBox,
 } from '../../components/window';
+import { getResult } from '../../store/modules/main';
 
-const result = () => {
+const Result = () => {
+    const resultObject = {}
+    const totalScore = useSelector((state: any) => state.main.score)
+    const resultTypes = useSelector((state: any) => state.main.resultTypes)
+    const key = resultTypes.filter((type: any) => type.value === totalScore).key
+
+    const [result, setResult] = useState({})
+    useEffect(() => {
+        axios.get(`https://ebti.realclass.co.kr/api/result/${key}`)
+            .then(res => {
+                const result: typeof resultObject = res.data
+                setResult(result)
+            })
+            .catch(err => console.log('error', err))
+    }, [])
     const copyLink = () => {
         //현재 주소 클립보드 복사하기
     }
@@ -102,4 +119,4 @@ const result = () => {
     );
 };
 
-export default result;
+export default Result;

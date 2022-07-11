@@ -40,10 +40,6 @@ const QuestionWindow = () => {
     const seqArray = useSelector((state: any) => state.main.seqArray)
     const questionSeq = seqArray[seq]
 
-    if (seq > 2) {
-        router.push('/result')
-    }
-
     useEffect(() => {
         axios.get(`http://localhost:3000/api/question`)
             .then(res => {
@@ -58,6 +54,9 @@ const QuestionWindow = () => {
         setCorrect(option)
         dispatch(setScore(option === 1 ? question.optionPoint1 : question.optionPoint2))
         dispatch(increaseSeq())
+        if (seq > 2) {
+            router.push('/result')
+        }
     }
 
     return (

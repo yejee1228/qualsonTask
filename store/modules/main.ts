@@ -15,10 +15,10 @@ export const getResult = (score: number) => ({ type: GET_RESULT, score })
 const initialState = {
     seq: 0, seqArray: [0, 1, 2],
     resultTypes: [
-        { value: 3, key: 'dwight' },
+        { value: 4, key: 'dwight' },
         { value: 5, key: 'mary' },
         { value: 6, key: 'tim' },
-        { value: 8, key: 'ted' },
+        { value: 7, key: 'ted' },
     ],
     score: 0
 }
@@ -40,8 +40,7 @@ const reducer = (state = initialState, action: any) => {
             return { ...state, score: state.score + action.score }
 
         case GET_RESULT:
-            const resultType = state.resultTypes.filter(resultType => resultType.value === action.score)[0]
-            const resultData = getResultAPI(resultType.key)
+            const resultData = getResultAPI(action.key)
             return { ...state, result: resultData }
 
         default: return state

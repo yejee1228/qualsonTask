@@ -7,7 +7,7 @@ export const Wrap = styled.div`
 `
 
 export const SearchBox = styled.div`
-    width: 55%;
+    width: 60%;
     height: 23px;
     top: 94px;
     left: 65px;
