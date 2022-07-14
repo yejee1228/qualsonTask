@@ -58,7 +58,6 @@ const QuestionWindow = () => {
         dispatch(setScore(option === 1 ? question.optionPoint1 : question.optionPoint2))
         if (seq === 2) {
             dispatch(getResult())
-            console.log(resultKey, 'resultKey')
             setTimeout(function () {
                 router.push({
                     pathname: '/result',
