@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {
   "question":
@@ -47,6 +47,6 @@ export default function handler(
   if (method === "GET") {
     return res.status(200).json({
       question
-    });
+    })
   }
 }

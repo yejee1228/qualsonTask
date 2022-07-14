@@ -1,5 +1,3 @@
-import { Reducer } from "redux"
-
 const SET_INITIAL_SEQ = 'main/SET_INITIAL_SEQ' as const
 const SET_SEQ_ARRAY = 'main/SET_SEQ_ARRAY' as const
 const INCREASE_SEQ = 'main/INCREASE_SEQ' as const
@@ -75,11 +73,11 @@ const reducer = (state: MainState = initialState, action: MainAction) => {
         case GET_RESULT: {
             state.totalScore = state.score1 + state.score2 + state.score3
             const resultType = state.resultTypes.find(type => type.value === state.totalScore)
-            return { ...state, resultKey: resultType }
+            return { ...state, resultKey: resultType.key }
         }
 
         case SET_INITIAL_SCORE:
-            return { ...state, score: 0 }
+            return { ...state, score1: 0, score2: 0, score3: 0, totalScore: 0 }
 
         default: return state
     }

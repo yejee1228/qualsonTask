@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { MainWrap } from '../../components/main'
+import { MainWrap } from '../../components/main';
 import {
     ResultWrap, ResultTypeText, ResultWindowWrap, TitleBar, TitleBarButton, ResultContentWrap,
     ResultCharacter, ResultCharacterText, ResultImage, TypeTalk, EnglishBox, ResultDescription,
@@ -48,11 +48,11 @@ const Result = () => {
         const dummy = document.createElement("input");
         const text = location.href;
 
-        document.body.appendChild(dummy);
+        document.body.appendChild(dummy)
         dummy.value = text;
         dummy.select();
         document.execCommand("copy")
-        document.body.removeChild(dummy);
+        document.body.removeChild(dummy)
         alert('링크가 복사되었습니다')
     }
 

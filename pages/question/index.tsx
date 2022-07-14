@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { RootState } from '../../store/modules';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { MainWrap } from '../../components/main'
+import { MainWrap } from '../../components/main';
 import {
     QuestionWrap,
     QuestionWindowWrap,
@@ -51,7 +51,7 @@ const QuestionWindow = () => {
             })
             .catch(err => console.log('error', err))
         setCorrect(0)
-    }, [seq]);
+    }, [seq])
 
     const nextPage = (option: number) => {
         setCorrect(option)
@@ -61,13 +61,13 @@ const QuestionWindow = () => {
             setTimeout(function () {
                 router.push({
                     pathname: '/result',
-                    query: resultKey,
+                    query: { key: resultKey },
                 })
-            }, 500);
+            }, 500)
         } else {
             setTimeout(function () {
                 dispatch(increaseSeq())
-            }, 500);
+            }, 500)
         }
     }
 

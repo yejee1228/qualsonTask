@@ -1,8 +1,8 @@
-import type { NextPage } from 'next'
+import type { NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from "next/router";
 import { useDispatch } from 'react-redux';
-import { MainWrap } from '../components/main'
+import { MainWrap } from '../components/main';
 import { Wrap, SearchBox, SearchText, TitleImage, Poster, Button, ButtonText } from '../components/title';
 import { setInitialSeq, setInitialScore, setSeqArray } from '../store/modules/main';
 

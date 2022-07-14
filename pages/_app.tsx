@@ -1,13 +1,14 @@
-import type { AppProps } from 'next/app'
-import Head from 'next/head'
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
-import { ThemeProvider, DefaultTheme } from 'styled-components'
-import GlobalStyle from '../components/globalstyles'
+import { configureStore } from '@reduxjs/toolkit';
+import { ThemeProvider, DefaultTheme } from 'styled-components';
+
+import GlobalStyle from '../components/globalstyles';
 import { wrapper } from "../store";
 import persistReducer from '../store/modules';
-import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
 
 const theme: DefaultTheme = {
   colors: {
