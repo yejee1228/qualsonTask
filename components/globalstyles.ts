@@ -15,6 +15,13 @@ const GlobalStyle = createGlobalStyle`
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
             Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     }
+    div#__next {
+        background: url(/images/background.png);
+        background-size: cover;
+        height: max-content;
+        min-height: 100%;
+    
+    }
     a {
         color: inherit;
         text-decoration: none;

@@ -1,18 +1,22 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import { HYDRATE } from "next-redux-wrapper";
+import { $CombinedState, combineReducers } from "@reduxjs/toolkit";
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-import main from './main';
+import main, { MainState } from './main';
 
-const reducer = (state: any, action: any) => {
-    if (action.type === HYDRATE) {
-        return {
-            ...state,
-            ...action.payload
-        };
-    }
-    return combineReducers({
-        main,
-    })(state, action);
+const reducer = combineReducers({
+    main,
+});
+
+const persistConfig = {
+    key: "root",
+    storage,
 }
 
-export default reducer;
+export type RootState = {
+    readonly [$CombinedState]?: undefined;
+} & {
+    main: MainState;
+}
+
+export default persistReducer(persistConfig, reducer);

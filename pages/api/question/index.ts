@@ -1,14 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
-  "question": any
+  "question":
+  {
+    text: string,
+    image: string,
+    option1: string,
+    option2: string,
+    optionPoint1: number,
+    optionPoint2: number,
+  }[]
 }
 
 const question = [
   {
     text: "새로운 사람과의 첫 대면. \n어색한 정적만 흐르고 있다. \n이럴 때 나는?",
     image: "/images/questionImage1.png",
-    option1: "상대가 말을 꺼낼 떄까지 기다린다.",
+    option1: "상대가 말을 꺼낼 때까지 기다린다.",
     option2: "먼저 말을 꺼낸다.",
     optionPoint1: 1,
     optionPoint2: 2,

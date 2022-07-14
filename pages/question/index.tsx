@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { RootState } from '../../store/modules';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { MainWrap } from '../../components/main'
 import {
@@ -18,9 +19,10 @@ import {
     QuestionImageWrap,
     QuestionImage,
     ResultBox,
-    ResultButton
+    ResultButton,
+    ResultButtonSpan
 } from '../../components/window';
-import { increaseSeq, setScore } from '../../store/modules/main';
+import { getResult, increaseSeq, setScore } from '../../store/modules/main';
 
 const QuestionWindow = () => {
     const questionObject = {
@@ -36,8 +38,9 @@ const QuestionWindow = () => {
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const seq = useSelector((state: any) => state.main.seq)
-    const seqArray = useSelector((state: any) => state.main.seqArray)
+    const seq: number = useSelector((state: RootState) => state.main.seq)
+    const seqArray: number[] = useSelector((state: RootState) => state.main.seqArray)
+    const resultKey: string = useSelector((state: RootState) => state.main.resultKey)
     const questionSeq = seqArray[seq]
 
     useEffect(() => {
@@ -48,76 +51,95 @@ const QuestionWindow = () => {
             })
             .catch(err => console.log('error', err))
         setCorrect(0)
-    }, [correct]);
+    }, [seq]);
 
     const nextPage = (option: number) => {
         setCorrect(option)
         dispatch(setScore(option === 1 ? question.optionPoint1 : question.optionPoint2))
         if (seq === 2) {
-            router.push('/result')
+            dispatch(getResult())
+            console.log(resultKey, 'resultKey')
+            setTimeout(function () {
+                router.push({
+                    pathname: '/result',
+                    query: resultKey,
+                })
+            }, 500);
         } else {
-            dispatch(increaseSeq())
+            setTimeout(function () {
+                dispatch(increaseSeq())
+            }, 500);
         }
     }
 
     return (
-        <MainWrap>
-            <QuestionWrap>
-                <QuestionWindowWrap>
-                    <TitleBar>
-                        <TitleBarButton color="#F56A6A" left="10px" />
-                        <TitleBarButton color="#5963FF" left="23px" />
-                    </TitleBar>
-                    <ContentWrap>
-                        <Count>0{seq + 1}/03</Count>
-                        <ProgressBar>
-                            {
-                                seq === 0 &&
-                                <>
-                                    <Proceeded seq={0} />
-                                    <BeforeProgress seq={1} />
-                                    <BeforeProgress seq={2} />
-                                </>
-                            }
-                            {
-                                seq === 1 &&
-                                <>
-                                    <Proceeded seq={0} />
-                                    <Proceeded seq={1} />
-                                    <BeforeProgress seq={2} />
-                                </>
-                            }
-                            {
-                                seq === 2 &&
-                                <>
-                                    <Proceeded seq={0} />
-                                    <Proceeded seq={1} />
-                                    <Proceeded seq={2} />
-                                </>
-                            }
-                        </ProgressBar>
-                        <QuestionBox>
-                            <QuestionText color='#00D37A'>
-                                Q .
-                            </QuestionText>
-                            <br />
-                            <QuestionText color='#000000'>
+        <div>
+            <MainWrap>
+                <QuestionWrap>
+                    <QuestionWindowWrap>
+                        <TitleBar>
+                            <TitleBarButton color="#F56A6A" left="10px" />
+                            <TitleBarButton color="#5963FF" left="23px" />
+                        </TitleBar>
+                        <ContentWrap>
+                            <Count>0{seq + 1}/03</Count>
+                            <ProgressBar>
                                 {
-                                    question.text
+                                    seq === 0 &&
+                                    <>
+                                        <Proceeded seq={0} />
+                                        <BeforeProgress seq={1} />
+                                        <BeforeProgress seq={2} />
+                                    </>
                                 }
-                            </QuestionText>
-                            <QuestionImageWrap>
-                                <QuestionImage src={question.image} />
-                            </QuestionImageWrap>
-                        </QuestionBox>
-                        <ResultBox>
-                            <ResultButton correct={correct === 1} onClick={() => nextPage(1)}>{question.option1}</ResultButton>
-                            <ResultButton correct={correct === 2} onClick={() => nextPage(2)}>{question.option2}</ResultButton>
-                        </ResultBox>
-                    </ContentWrap>
-                </QuestionWindowWrap>
-            </QuestionWrap>
-        </MainWrap>
+                                {
+                                    seq === 1 &&
+                                    <>
+                                        <Proceeded seq={0} />
+                                        <Proceeded seq={1} />
+                                        <BeforeProgress seq={2} />
+                                    </>
+                                }
+                                {
+                                    seq === 2 &&
+                                    <>
+                                        <Proceeded seq={0} />
+                                        <Proceeded seq={1} />
+                                        <Proceeded seq={2} />
+                                    </>
+                                }
+                            </ProgressBar>
+                            <QuestionBox>
+                                <QuestionText color='#00D37A'>
+                                    Q .
+                                </QuestionText>
+                                <br />
+                                <QuestionText color='#000000'>
+                                    {
+                                        question.text
+                                    }
+                                </QuestionText>
+                                <QuestionImageWrap>
+                                    <QuestionImage src={question.image} />
+                                </QuestionImageWrap>
+                            </QuestionBox>
+                            <ResultBox>
+                                <ResultButton correct={correct === 1} onClick={() => nextPage(1)}>
+                                    <ResultButtonSpan>
+                                        {question.option1}
+                                    </ResultButtonSpan>
+                                </ResultButton>
+                                <ResultButton correct={correct === 2} onClick={() => nextPage(2)}>
+                                    <ResultButtonSpan>
+                                        {question.option2}
+                                    </ResultButtonSpan>
+                                </ResultButton>
+                            </ResultBox>
+                        </ContentWrap>
+                    </QuestionWindowWrap>
+                </QuestionWrap>
+            </MainWrap>
+        </div>
     );
 };
 
