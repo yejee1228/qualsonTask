@@ -33,6 +33,11 @@ const QuestionWindow = () => {
         optionPoint1: 0,
         optionPoint2: 0,
     }
+    type resultTypeObject = {
+        key: string,
+        value: number
+    }
+
     const [question, setQuestion] = useState(questionObject)
     const [correct, setCorrect] = useState(0)
     const dispatch = useDispatch()
@@ -40,7 +45,7 @@ const QuestionWindow = () => {
 
     const seq: number = useSelector((state: RootState) => state.main.seq)
     const seqArray: number[] = useSelector((state: RootState) => state.main.seqArray)
-    const resultKey: string = useSelector((state: RootState) => state.main.resultKey)
+    const resultType: resultTypeObject = useSelector((state: RootState) => state.main.resultType)
     const questionSeq = seqArray[seq]
 
     useEffect(() => {
@@ -52,17 +57,19 @@ const QuestionWindow = () => {
             .catch(err => console.log('error', err))
         setCorrect(0)
     }, [seq, questionSeq])
+    useEffect(() => {
+        dispatch(getResult())
+    }, [correct, dispatch])
 
-    const nextPage = (option: number) => {
+    const nextPage = (option: number, optionScore: number) => {
         setCorrect(option)
-        dispatch(setScore(option === 1 ? question.optionPoint1 : question.optionPoint2))
+        dispatch(setScore(optionScore))
         if (seq === 2) {
-            //마지막 문항 선택 시 점수 계산. 결과페이지로 이동
-            dispatch(getResult())
+            //마지막 문항 선택 시 결과페이지로 이동
             setTimeout(function () {
                 router.push({
                     pathname: '/result',
-                    query: { key: resultKey },
+                    query: { key: resultType.key },
                 })
             }, 500)
         } else {
@@ -125,12 +132,12 @@ const QuestionWindow = () => {
                                 </QuestionImageWrap>
                             </QuestionBox>
                             <ResultBox>
-                                <ResultButton correct={correct === 1} onClick={() => nextPage(1)}>
+                                <ResultButton correct={correct === 1} onClick={() => nextPage(1, question.optionPoint1)}>
                                     <ResultButtonSpan>
                                         {question.option1}
                                     </ResultButtonSpan>
                                 </ResultButton>
-                                <ResultButton correct={correct === 2} onClick={() => nextPage(2)}>
+                                <ResultButton correct={correct === 2} onClick={() => nextPage(2, question.optionPoint2)}>
                                     <ResultButtonSpan>
                                         {question.option2}
                                     </ResultButtonSpan>

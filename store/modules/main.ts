@@ -24,8 +24,9 @@ export interface MainState {
     seq: number,
     seqArray: number[],
     resultTypes:
-    { value: number, key: string }[],
-    resultKey: string,
+    { key: string, value: number }[],
+    resultType:
+    { key: string, value: number },
     score1: number,
     score2: number,
     score3: number,
@@ -36,12 +37,12 @@ const initialState: MainState = {
     seq: 0,
     seqArray: [0, 1, 2],
     resultTypes: [
-        { value: 4, key: 'dwight' },
-        { value: 5, key: 'mary' },
-        { value: 6, key: 'tim' },
-        { value: 7, key: 'ted' },
+        { key: 'dwight', value: 4 },
+        { key: 'mary', value: 5, },
+        { key: 'tim', value: 6 },
+        { key: 'ted', value: 7 },
     ],
-    resultKey: '',
+    resultType: { key: '', value: 0 },
     score1: 0,
     score2: 0,
     score3: 0,
@@ -67,18 +68,20 @@ const reducer = (state: MainState = initialState, action: MainAction) => {
                 case 0: return { ...state, score1: action.score }
                 case 1: return { ...state, score2: action.score }
                 case 2: return { ...state, score3: action.score }
-                default: return { ...state }
+                default: return { state }
             }
         }
 
         case GET_RESULT: {
-            state.totalScore = state.score1 + state.score2 + state.score3
-            const resultType = state.resultTypes.find(type => type.value === state.totalScore)
-            return { ...state, resultKey: resultType.key }
+            return {
+                ...state,
+                totalScore: state.score1 + state.score2 + state.score3,
+                resultType: state.resultTypes.find(e => e.value === state.totalScore)
+            }
         }
 
         case SET_INITIAL_SCORE:
-            return { ...state, score1: 0, score2: 0, score3: 0, totalScore: 0 }
+            return { ...state, score1: 0, score2: 0, score3: 0, totalScore: 0, resultType: { key: '', value: 0 }, resultKey: '' }
 
         default: return state
     }
