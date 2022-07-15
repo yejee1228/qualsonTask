@@ -57,6 +57,7 @@ const QuestionWindow = () => {
         setCorrect(option)
         dispatch(setScore(option === 1 ? question.optionPoint1 : question.optionPoint2))
         if (seq === 2) {
+            //마지막 문항 선택 시 점수 계산. 결과페이지로 이동
             dispatch(getResult())
             setTimeout(function () {
                 router.push({
@@ -65,6 +66,7 @@ const QuestionWindow = () => {
                 })
             }, 500)
         } else {
+            //선택된 버튼 색상 변경, 0.5초 후 다음 페이지 이동
             setTimeout(function () {
                 dispatch(increaseSeq())
             }, 500)

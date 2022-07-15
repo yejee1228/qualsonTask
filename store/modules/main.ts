@@ -58,6 +58,7 @@ const reducer = (state: MainState = initialState, action: MainAction) => {
             const sortedArray = array.sort(() => Math.random() - 0.5);
             return { ...state, seqArray: sortedArray }
         }
+
         case INCREASE_SEQ:
             return { ...state, seq: state.seq + 1 }
 

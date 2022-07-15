@@ -12,6 +12,7 @@ type Data = {
   }[]
 }
 
+//optionPoint : 각 문항의 점수를 소수로 할당.
 const question = [
   {
     text: "새로운 사람과의 첫 대면. \n어색한 정적만 흐르고 있다. \n이럴 때 나는?",

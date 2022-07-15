@@ -9,6 +9,9 @@ import {
 } from '../../components/window';
 
 const Result = () => {
+    const router = useRouter();
+    const { key } = router.query;
+
     const resultObject = {
         title: '',
         key: '',
@@ -21,9 +24,6 @@ const Result = () => {
     const [result, setResult] = useState(resultObject)
     const [bestResult, setBestResult] = useState(resultObject)
     const [worstResult, setWorstResult] = useState(resultObject)
-
-    const router = useRouter();
-    const { key } = router.query;
 
     useEffect(() => {
         if (key) {
@@ -44,6 +44,8 @@ const Result = () => {
                 .catch(err => console.log('error', err))
         }
     }, [result, key])
+
+    //링크 복사 버튼 기능
     const copyLink = () => {
         const dummy = document.createElement("input");
         const text = location.href;
