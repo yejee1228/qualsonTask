@@ -51,7 +51,7 @@ const QuestionWindow = () => {
             })
             .catch(err => console.log('error', err))
         setCorrect(0)
-    }, [seq])
+    }, [seq, questionSeq])
 
     const nextPage = (option: number) => {
         setCorrect(option)

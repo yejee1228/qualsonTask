@@ -3,7 +3,8 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:react/jsx-runtime"
+    "plugin:react/jsx-runtime",
+    "next"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -13,7 +14,13 @@
       "jsx": true
     }
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "import",
+    "@typescript-eslint",
+    "prettier"
+  ],
   "rules": {
     "@typescript-eslint/semi": "off",
     "@typescript-eslint/space-before-function-paren": "off"
