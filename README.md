@@ -1,34 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+이 프로젝트는 퀄슨에서 제공해주신 과제로 진행되었습니다.
 
-## Getting Started
+## About
 
-First, run the development server:
+- yarn dev 명령어로 실행 후 http://localhost:3000 를 통해 접속 할 수 있습니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- 문제 문항 데이터는 next/api로 제공하였습니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 테스트 시작 시에 문항의 순서가 랜덤으로 정해져서 store 에 저장됩니다.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- 각 문항 선택 시 선택지의 버튼 색상이 변경됩니다. 사용자가 선택한 버튼을 확인할 수 있도록 버튼 색상 변경 후 0.5초 후에 페이지가 이동됩니다.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- 각 문항에 소수로 된 각각 다른 점수를 부여하여, 문항의 순서가 랜덤으로 제공되어도 변함없는 결과값이 나올 수 있습니다. 마지막 문항 선택 시 점수를 계산하고 결과를 도출합니다.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- redux-persist 를 설정하여 새로고침 시에도 store의 값이 변하지 않도록 구현하였습니다.
 
-## Learn More
+## Used Skill
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js, typescript : router 기능과 타입 정의
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- styled-components : 스타일 및 컴포넌트 정의
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- redux, redux-persist : 상태관리와 상태저장
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- eslint, prettier : 코드 컨벤션
